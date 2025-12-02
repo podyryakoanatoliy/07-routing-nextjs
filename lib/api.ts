@@ -16,9 +16,18 @@ interface FormValues {
 
 axios.defaults.baseURL = "https://notehub-public.goit.study/api";
 // const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export const getNotes = async (categoryId?: string) => {
+  const res = await axios.get<NoteListResponse>("/notes", {
+    params: { categoryId },
+  });
+  return res.data;
+};
+
 export const fetchNotes = async (
   query: string,
-  page: number
+  page: number,
+  tag?: string
 ): Promise<NoteListResponse> => {
   const options = {
     headers: {
@@ -29,6 +38,7 @@ export const fetchNotes = async (
       ...(query !== "" && { search: query }),
       page,
       perPage: 12,
+      tag,
     },
   };
   // await delay(2000);
