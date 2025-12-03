@@ -21,6 +21,7 @@ const Notes = async ({ params }: Props) => {
     queryKey: ["notes", query, id],
     queryFn: () => fetchNotes(query, Number(id)),
   });
+
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <NotesClient />

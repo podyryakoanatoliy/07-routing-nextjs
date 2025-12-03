@@ -14,7 +14,7 @@ interface FormValues {
   tag: string;
 }
 
-export type Tag = {
+export type Category = {
   content: string;
   createdAt: string;
   id: string;
@@ -24,21 +24,21 @@ export type Tag = {
 };
 
 axios.defaults.baseURL = "https://notehub-public.goit.study/api";
-// const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-// export const getNotes = async (categoryId?: string) => {
-//   const options = {
-//     headers: {
-//       accept: "application/json",
-//       "Content-Type": "application/json",
-//       "Cache-Control": "no-cache",
-//       Authorization: `Bearer ${myKey}`,
-//     },
-//     params: { categoryId },
-//   };
-//   const res = await axios.get<NoteListResponse>("/notes", options);
-//   return res.data;
-// };
+export const getCategories = async () => {
+  const options = {
+    headers: {
+      accept: "application/json",
+      "Content-Type": "application/json",
+      "Cache-Control": "no-cache",
+      Authorization: `Bearer ${myKey}`,
+    },
+  };
+  const res = await axios<Category[]>("/notes", options);
+  console.log(res.data);
+
+  return res.data;
+};
 
 export const fetchNotes = async (
   query?: string,
