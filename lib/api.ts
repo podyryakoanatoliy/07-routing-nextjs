@@ -14,20 +14,36 @@ interface FormValues {
   tag: string;
 }
 
+export type Tag = {
+  content: string;
+  createdAt: string;
+  id: string;
+  tag: string;
+  title: string;
+  updatedAt: string;
+};
+
 axios.defaults.baseURL = "https://notehub-public.goit.study/api";
 // const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const getNotes = async (categoryId?: string) => {
-  const res = await axios.get<NoteListResponse>("/notes", {
-    params: { categoryId },
-  });
-  return res.data;
-};
+// export const getNotes = async (categoryId?: string) => {
+//   const options = {
+//     headers: {
+//       accept: "application/json",
+//       "Content-Type": "application/json",
+//       "Cache-Control": "no-cache",
+//       Authorization: `Bearer ${myKey}`,
+//     },
+//     params: { categoryId },
+//   };
+//   const res = await axios.get<NoteListResponse>("/notes", options);
+//   return res.data;
+// };
 
 export const fetchNotes = async (
-  query: string,
-  page: number,
-  tag?: string
+  query?: string,
+  page?: number,
+  categoryId?: string
 ): Promise<NoteListResponse> => {
   const options = {
     headers: {
@@ -38,7 +54,7 @@ export const fetchNotes = async (
       ...(query !== "" && { search: query }),
       page,
       perPage: 12,
-      tag,
+      categoryId,
     },
   };
   // await delay(2000);

@@ -30,7 +30,7 @@ export default function NotesClient() {
     placeholderData: keepPreviousData,
     refetchOnMount: false,
   });
-  console.log(data);
+  // console.log(data);
   const handleCloseModal = () => setOpenModal(!openModal);
   if (isLoading) return <p>Loading...</p>;
 
