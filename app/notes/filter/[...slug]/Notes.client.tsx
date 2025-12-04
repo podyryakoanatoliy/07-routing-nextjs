@@ -12,11 +12,11 @@ import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import NoteList from "@/components/NoteList/NoteList";
 
-export default function NotesClient() {
+export default function NotesClient({ tag }: { tag: string | undefined }) {
   const [query, setQuery] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [openModal, setOpenModal] = useState<boolean>(false);
-
+  // console.log(tag);
   const handleChange = useDebouncedCallback(
     (evt: React.ChangeEvent<HTMLInputElement>) => {
       setQuery(evt.target.value);
@@ -25,8 +25,8 @@ export default function NotesClient() {
     1000
   );
   const { data, isLoading, error } = useQuery({
-    queryKey: ["notes", query, page],
-    queryFn: () => fetchNotes(query, page),
+    queryKey: ["notes", query, page, tag],
+    queryFn: () => fetchNotes(query, page, tag),
     placeholderData: keepPreviousData,
     refetchOnMount: false,
   });

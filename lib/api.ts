@@ -25,25 +25,10 @@ export type Category = {
 
 axios.defaults.baseURL = "https://notehub-public.goit.study/api";
 
-export const getCategories = async () => {
-  const options = {
-    headers: {
-      accept: "application/json",
-      "Content-Type": "application/json",
-      "Cache-Control": "no-cache",
-      Authorization: `Bearer ${myKey}`,
-    },
-  };
-  const res = await axios<Category[]>("/notes", options);
-  console.log(res.data);
-
-  return res.data;
-};
-
 export const fetchNotes = async (
   query?: string,
   page?: number,
-  categoryId?: string
+  tag?: string
 ): Promise<NoteListResponse> => {
   const options = {
     headers: {
@@ -54,11 +39,11 @@ export const fetchNotes = async (
       ...(query !== "" && { search: query }),
       page,
       perPage: 12,
-      categoryId,
+      ...(tag && tag !== "all" && tag !== "All" && { tag }),
     },
   };
-  // await delay(2000);
   const { data } = await axios.get<NoteListResponse>("/notes", options);
+  // console.log(data);
   return data;
 };
 
