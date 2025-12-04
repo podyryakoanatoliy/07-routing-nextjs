@@ -11,8 +11,9 @@ import Pagination from "@/components/Pagination/Pagination";
 import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import NoteList from "@/components/NoteList/NoteList";
+import { useParams } from "next/navigation";
 
-export default function NotesClient({ tag }: { tag: string | undefined }) {
+export default function NotesClient() {
   const [query, setQuery] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -24,8 +25,15 @@ export default function NotesClient({ tag }: { tag: string | undefined }) {
     },
     1000
   );
+
+  const { slug } = useParams<{ slug: string }>();
+  const tag = slug && slug[0] === "All" ? "" : slug[0];
+  const queryKey = tag
+    ? ["notes", { query, page, tag }]
+    : ["notes", { query, page }];
+
   const { data, isLoading, error } = useQuery({
-    queryKey: ["notes", query, page, tag],
+    queryKey: queryKey,
     queryFn: () => fetchNotes(query, page, tag),
     placeholderData: keepPreviousData,
     refetchOnMount: false,

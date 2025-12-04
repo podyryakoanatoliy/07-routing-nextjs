@@ -4,8 +4,12 @@ import { fetchNoteById } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import css from "./NoteDetailsClient.module.css";
+// import Modal from "@/components/Modal/Modal";
 
 export default function NoteDetailsClient() {
+  // const router = useRouter();
+  // const close = () => router.back();
+
   const { id } = useParams<{ id: string }>();
   const { data, isLoading, error } = useQuery({
     queryKey: ["note", id],
